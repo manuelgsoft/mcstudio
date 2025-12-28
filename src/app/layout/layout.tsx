@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Lora, Montserrat, Oswald, Poppins, Roboto } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Lora, Montserrat, Oswald, Poppins, Roboto } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+})
 
 const lora = Lora({
   variable: "--font-lora",
@@ -55,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${montserrat.variable} ${poppins.variable} ${lora.variable} ${oswald.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${montserrat.variable} ${poppins.variable} ${lora.variable} ${oswald.variable} ${inter.variable} antialiased`}
       >
         {children}
       </body>

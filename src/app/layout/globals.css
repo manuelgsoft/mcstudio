@@ -22,7 +22,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto);
 }
 
 @keyframes marquee {
@@ -53,10 +53,6 @@ body {
   }
 }
 
-body {
-  font-family: var(--font-montserrat);
-}
-
 h1, h2 {
-  font-family: var(--font-poppins);
+  font-family: var(--font-inter), "Inter", "Inter Fallback", sans-serif;
 }
