@@ -11,7 +11,7 @@ export default function AboutUs() {
                 Maria and Carolina, your travel tailors
               </h2>
               <p className="mt-3 text-base text-[#3d4a68] sm:text-lg">
-                Here to make our dream come true: custom-sewing trips designed for each of you
+                Here to make our dream come true: custom-sewing trips designed for each of you.
               </p>
             </div>
             <div className="w-full max-w-md overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(12,17,43,0.18)]">

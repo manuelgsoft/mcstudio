@@ -24,7 +24,7 @@ export default function Info() {
     <section className="mx-auto flex max-w-6xl flex-col items-center gap-10 px-5 pb-20 pt-16 text-center sm:px-8 lg:pb-24">
       <div className="max-w-3xl space-y-3">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-500">
-          Tailor-made journeys
+          Tailor-made experiences
         </p>
         <h2 className="text-3xl font-semibold text-[#0b1930] sm:text-4xl">
           A travel studio built around you

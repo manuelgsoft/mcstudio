@@ -16,7 +16,7 @@ export default function NavBar() {
             <GlobeAsiaAustraliaIcon className="h-8 w-8" />
           </div>
           <div className="leading-tight text-left">
-            <h1 className="text-lg font-bold tracking-tight text-[#0b1930]">MC Studio</h1>
+            <h1 className="text-xl font-bold tracking-tight text-[#0b1930]">MC Studio</h1>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-500">Travel design</p>
           </div>
         </button>
