@@ -7,8 +7,12 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 import { FormEvent, useMemo, useState, type ReactNode } from "react";
 
+import {
+  ALL_COUNTRIES,
+} from "@/app/data/countries";
 import { Button } from "@/components/ui/button";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import {
@@ -41,218 +45,15 @@ const TRIP_TYPE_LABELS: Record<TripType, string> = {
   group: "Group trip",
 };
 
-const COUNTRIES_BY_REGION: Record<string, string[]> = {
-  Europe: [
-    "Albania",
-    "Andorra",
-    "Austria",
-    "Belarus",
-    "Belgium",
-    "Bosnia and Herzegovina",
-    "Bulgaria",
-    "Croatia",
-    "Cyprus",
-    "Czech Republic",
-    "Denmark",
-    "Estonia",
-    "Finland",
-    "France",
-    "Germany",
-    "Greece",
-    "Hungary",
-    "Iceland",
-    "Ireland",
-    "Italy",
-    "Latvia",
-    "Liechtenstein",
-    "Lithuania",
-    "Luxembourg",
-    "Malta",
-    "Moldova",
-    "Monaco",
-    "Montenegro",
-    "Netherlands",
-    "North Macedonia",
-    "Norway",
-    "Poland",
-    "Portugal",
-    "Romania",
-    "San Marino",
-    "Serbia",
-    "Slovakia",
-    "Slovenia",
-    "Spain",
-    "Sweden",
-    "Switzerland",
-    "Ukraine",
-    "United Kingdom",
-    "Vatican City",
-  ],
-  Asia: [
-    "Afghanistan",
-    "Armenia",
-    "Azerbaijan",
-    "Bahrain",
-    "Bangladesh",
-    "Bhutan",
-    "Brunei",
-    "Cambodia",
-    "China",
-    "Georgia",
-    "India",
-    "Indonesia",
-    "Iran",
-    "Iraq",
-    "Israel",
-    "Japan",
-    "Jordan",
-    "Kazakhstan",
-    "Kuwait",
-    "Kyrgyzstan",
-    "Laos",
-    "Lebanon",
-    "Malaysia",
-    "Maldives",
-    "Mongolia",
-    "Myanmar",
-    "Nepal",
-    "North Korea",
-    "Oman",
-    "Pakistan",
-    "Philippines",
-    "Qatar",
-    "Saudi Arabia",
-    "Singapore",
-    "South Korea",
-    "Sri Lanka",
-    "Syria",
-    "Tajikistan",
-    "Thailand",
-    "Timor-Leste",
-    "Turkey",
-    "Turkmenistan",
-    "United Arab Emirates",
-    "Uzbekistan",
-    "Vietnam",
-    "Yemen",
-  ],
-  Africa: [
-    "Algeria",
-    "Angola",
-    "Benin",
-    "Botswana",
-    "Burkina Faso",
-    "Burundi",
-    "Cameroon",
-    "Cape Verde",
-    "Central African Republic",
-    "Chad",
-    "Comoros",
-    "Congo",
-    "Djibouti",
-    "Egypt",
-    "Equatorial Guinea",
-    "Eritrea",
-    "Eswatini",
-    "Ethiopia",
-    "Gabon",
-    "Gambia",
-    "Ghana",
-    "Guinea",
-    "Guinea-Bissau",
-    "Ivory Coast",
-    "Kenya",
-    "Lesotho",
-    "Liberia",
-    "Libya",
-    "Madagascar",
-    "Malawi",
-    "Mali",
-    "Mauritania",
-    "Mauritius",
-    "Morocco",
-    "Mozambique",
-    "Namibia",
-    "Niger",
-    "Nigeria",
-    "Rwanda",
-    "São Tomé and Príncipe",
-    "Senegal",
-    "Seychelles",
-    "Sierra Leone",
-    "Somalia",
-    "South Africa",
-    "South Sudan",
-    "Sudan",
-    "Tanzania",
-    "Togo",
-    "Tunisia",
-    "Uganda",
-    "Zambia",
-    "Zimbabwe",
-  ],
-  "North America": ["Canada", "Mexico", "United States"],
-  Caribbean: [
-    "Antigua and Barbuda",
-    "Bahamas",
-    "Barbados",
-    "Cuba",
-    "Dominica",
-    "Dominican Republic",
-    "Grenada",
-    "Haiti",
-    "Jamaica",
-    "Saint Kitts and Nevis",
-    "Saint Lucia",
-    "Saint Vincent and the Grenadines",
-    "Trinidad and Tobago",
-  ],
-  "Central America": [
-    "Belize",
-    "Costa Rica",
-    "El Salvador",
-    "Guatemala",
-    "Honduras",
-    "Nicaragua",
-    "Panama",
-  ],
-  "South America": [
-    "Argentina",
-    "Bolivia",
-    "Brazil",
-    "Chile",
-    "Colombia",
-    "Ecuador",
-    "Guyana",
-    "Paraguay",
-    "Peru",
-    "Suriname",
-    "Uruguay",
-    "Venezuela",
-  ],
-  Oceania: [
-    "Australia",
-    "Fiji",
-    "Kiribati",
-    "Marshall Islands",
-    "Micronesia",
-    "Nauru",
-    "New Zealand",
-    "Palau",
-    "Papua New Guinea",
-    "Samoa",
-  ],
-};
-
-const ALL_COUNTRIES = Object.values(COUNTRIES_BY_REGION).flat();
-
 export default function SearchForm() {
+  const router = useRouter();
   const [location, setLocation] = useState("");
   const [locationOpen, setLocationOpen] = useState(false);
   const [locationQuery, setLocationQuery] = useState("");
   const [dateOpen, setDateOpen] = useState(false);
   const [travelDate, setTravelDate] = useState<Date | undefined>();
   const [tripType, setTripType] = useState<TripType | undefined>();
+  const [submitted, setSubmitted] = useState(false);
 
   const filteredCountries = useMemo(() => {
     const query = locationQuery.trim().toLowerCase();
@@ -264,11 +65,14 @@ export default function SearchForm() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log({
-      location,
-      travelDate: travelDate ? travelDate.toISOString() : null,
-      tripType,
-    });
+    setSubmitted(true);
+    if (!location || !travelDate || !tripType) return;
+    const params = new URLSearchParams();
+    params.set("location", location);
+    params.set("date", travelDate.toISOString());
+    params.set("tripType", tripType);
+    const queryString = params.toString();
+    router.push(`/questionnaire${queryString ? `?${queryString}` : ""}`);
   }
 
   return (
@@ -281,7 +85,11 @@ export default function SearchForm() {
           Tell us how you imagine your journey
         </p>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-          <Field label="Location" icon={<MapPinIcon className="h-5 w-5" />}>
+          <Field
+            label="Location"
+            icon={<MapPinIcon className="h-5 w-5" />}
+            error={submitted && !location ? "This field is required" : undefined}
+          >
             <Popover
               open={locationOpen}
               onOpenChange={(open) => {
@@ -339,6 +147,9 @@ export default function SearchForm() {
           <Field
             label="Travel date"
             icon={<CalendarDaysIcon className="h-5 w-5" />}
+            error={
+              submitted && !travelDate ? "This field is required" : undefined
+            }
           >
             <Popover open={dateOpen} onOpenChange={setDateOpen}>
               <PopoverTrigger asChild>
@@ -375,7 +186,11 @@ export default function SearchForm() {
             </Popover>
           </Field>
 
-          <Field label="Trip type" icon={<UsersIcon className="h-5 w-5" />}>
+          <Field
+            label="Trip type"
+            icon={<UsersIcon className="h-5 w-5" />}
+            error={submitted && !tripType ? "This field is required" : undefined}
+          >
             <Select
               value={tripType}
               onValueChange={(value) => setTripType(value as TripType)}
@@ -416,23 +231,36 @@ export default function SearchForm() {
 function Field({
   label,
   icon,
+  error,
   children,
 }: {
   label: string;
   icon: ReactNode;
+  error?: string;
   children: ReactNode;
 }) {
-  return (
-    <div className="flex min-w-[200px] flex-1 items-center gap-3 rounded-xl bg-[#f6f8fc] px-4 py-3 transition hover:bg-[#eef2ff] focus-within:ring-2 focus-within:ring-blue-500">
-      <div className="pointer-events-none flex h-10 w-10 items-center justify-center rounded-full bg-white text-blue-500 shadow-sm">
-        {icon}
-      </div>
+  const wrapperClasses =
+    "flex min-w-[200px] flex-1 items-center gap-3 rounded-xl bg-[#f6f8fc] px-4 py-3 transition hover:bg-[#eef2ff] focus-within:ring-2 focus-within:ring-blue-500" +
+    (error ? " ring-2 ring-red-500 focus-within:ring-red-500" : "");
 
-      <div className="flex-1">
-        <label className="pointer-events-none mb-1 block text-[11px] font-semibold uppercase tracking-[0.16em] text-gray-500">
-          {label}
-        </label>
-        {children}
+  return (
+    <div className="flex-1">
+      <div className={wrapperClasses}>
+        <div className="pointer-events-none flex h-10 w-10 items-center justify-center rounded-full bg-white text-blue-500 shadow-sm">
+          {icon}
+        </div>
+
+        <div className="flex-1">
+          <label
+            className={
+              "pointer-events-none mb-1 block text-[11px] font-semibold uppercase tracking-[0.16em]" +
+              (error ? " text-red-600" : " text-gray-500")
+            }
+          >
+            {label}
+          </label>
+          {children}
+        </div>
       </div>
     </div>
   );

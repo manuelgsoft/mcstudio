@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function AboutUs() {
     const foundersImage = "/images/us.jpeg";
     return (
@@ -15,10 +17,12 @@ export default function AboutUs() {
               </p>
             </div>
             <div className="w-full max-w-md overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(12,17,43,0.18)]">
-              <img
+              <Image
                 src={foundersImage}
                 alt="Maria and Carolina smiling together"
                 className="h-full w-full rounded-[14px] object-cover grayscale"
+                width={1042}
+                height={1426}
                 loading="lazy"
               />
             </div>
