@@ -1,4 +1,3 @@
-
 "use client";
 import AboutUs from "@/app/components/AboutUs";
 import Footer from "@/app/components/Footer";

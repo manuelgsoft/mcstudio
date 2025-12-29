@@ -10,9 +10,7 @@ import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { FormEvent, useMemo, useState, type ReactNode } from "react";
 
-import {
-  ALL_COUNTRIES,
-} from "@/app/data/countries";
+import { ALL_COUNTRIES } from "@/app/data/countries";
 import { Button } from "@/components/ui/button";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import {
@@ -59,7 +57,7 @@ export default function SearchForm() {
     const query = locationQuery.trim().toLowerCase();
     if (!query) return ALL_COUNTRIES;
     return ALL_COUNTRIES.filter((country) =>
-      country.toLowerCase().includes(query)
+      country.toLowerCase().includes(query),
     );
   }, [locationQuery]);
 
@@ -88,7 +86,9 @@ export default function SearchForm() {
           <Field
             label="Location"
             icon={<MapPinIcon className="h-5 w-5" />}
-            error={submitted && !location ? "This field is required" : undefined}
+            error={
+              submitted && !location ? "This field is required" : undefined
+            }
           >
             <Popover
               open={locationOpen}
@@ -189,16 +189,16 @@ export default function SearchForm() {
           <Field
             label="Trip type"
             icon={<UsersIcon className="h-5 w-5" />}
-            error={submitted && !tripType ? "This field is required" : undefined}
+            error={
+              submitted && !tripType ? "This field is required" : undefined
+            }
           >
             <Select
               value={tripType}
               onValueChange={(value) => setTripType(value as TripType)}
             >
               <SelectTrigger className="h-12 w-full cursor-pointer rounded-lg border-0 bg-transparent px-0 text-left text-base font-medium text-black shadow-none hover:bg-transparent focus-visible:ring-0 [&>svg]:hidden">
-                <SelectValue
-                  placeholder="Select trip type"
-                />
+                <SelectValue placeholder="Select trip type" />
               </SelectTrigger>
               <SelectContent>
                 {Object.entries(TRIP_TYPE_LABELS).map(([value, label]) => (

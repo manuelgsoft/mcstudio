@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 export default function NavBar() {
-    return (
+  return (
     <header className="z-30 w-full bg-white/90 backdrop-blur border-b border-[#e7eaf3]">
       <nav className="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-5 sm:px-8">
         <Link
@@ -17,8 +17,12 @@ export default function NavBar() {
             <GlobeAsiaAustraliaIcon className="h-8 w-8" />
           </div>
           <div className="leading-tight text-left">
-            <h1 className="text-xl font-bold tracking-tight text-[#0b1930]">MC Studio</h1>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-500">Travel design</p>
+            <h1 className="text-xl font-bold tracking-tight text-[#0b1930]">
+              MC Studio
+            </h1>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-500">
+              Travel design
+            </p>
           </div>
         </Link>
         <div className="flex items-center gap-3">
@@ -37,5 +41,5 @@ export default function NavBar() {
         </div>
       </nav>
     </header>
-  )
+  );
 }

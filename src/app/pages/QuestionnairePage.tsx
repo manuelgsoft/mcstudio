@@ -63,13 +63,15 @@ export default function QuestionnairePage() {
     : undefined;
 
   const [location, setLocation] = useState(locationFromSearch);
-  const [travelDate, setTravelDate] = useState<Date | undefined>(dateFromSearch);
+  const [travelDate, setTravelDate] = useState<Date | undefined>(
+    dateFromSearch,
+  );
   const [locationOpen, setLocationOpen] = useState(false);
   const [locationQuery, setLocationQuery] = useState(locationFromSearch);
   const [dateOpen, setDateOpen] = useState(false);
 
   const [tripType, setTripType] = useState<TripType | undefined>(
-    tripTypeFromSearch
+    tripTypeFromSearch,
   );
   const [adults, setAdults] = useState(2);
   const [childrenCount, setChildrenCount] = useState(0);
@@ -97,19 +99,19 @@ export default function QuestionnairePage() {
   const filteredDestinations = useMemo(() => {
     if (!locationQuery.trim()) return ALL_COUNTRIES;
     return ALL_COUNTRIES.filter((d) =>
-      d.toLowerCase().includes(locationQuery.toLowerCase())
+      d.toLowerCase().includes(locationQuery.toLowerCase()),
     );
   }, [locationQuery]);
 
   function toggleSelection(
     value: string,
     current: string[],
-    setter: (next: string[]) => void
+    setter: (next: string[]) => void,
   ) {
     setter(
       current.includes(value)
         ? current.filter((v) => v !== value)
-        : [...current, value]
+        : [...current, value],
     );
   }
 
@@ -169,7 +171,8 @@ export default function QuestionnairePage() {
             Tell us your travel preferences
           </h1>
           <p className="text-base text-[#3d4a68]">
-            Share your destination, dates, and the vibe you want—we will craft a custom proposal around you.
+            Share your destination, dates, and the vibe you want—we will craft a
+            custom proposal around you.
           </p>
         </div>
 
@@ -192,97 +195,105 @@ export default function QuestionnairePage() {
           {currentStep === 1 && (
             <div className="space-y-8">
               <div className="space-y-6">
-              <Field label="Destination">
-                <Popover open={locationOpen} onOpenChange={setLocationOpen}>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="h-12 w-full justify-start gap-3 cursor-pointer">
-                      <MapPinIcon className="h-5 w-5 text-blue-600" />
-                      {location || "Search destinations"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="p-0">
-                    <Command>
-                      <CommandInput
-                        value={locationQuery}
-                        onValueChange={(v) => {
-                          setLocationQuery(v);
-                          setLocation(v);
+                <Field label="Destination">
+                  <Popover open={locationOpen} onOpenChange={setLocationOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="h-12 w-full justify-start gap-3 cursor-pointer"
+                      >
+                        <MapPinIcon className="h-5 w-5 text-blue-600" />
+                        {location || "Search destinations"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Command>
+                        <CommandInput
+                          value={locationQuery}
+                          onValueChange={(v) => {
+                            setLocationQuery(v);
+                            setLocation(v);
+                          }}
+                          placeholder="Search destinations..."
+                        />
+                        <CommandList>
+                          <CommandEmpty>No results</CommandEmpty>
+                          <CommandGroup>
+                            {filteredDestinations.map((d) => (
+                              <CommandItem
+                                key={d}
+                                value={d}
+                                onSelect={() => {
+                                  setLocation(d);
+                                  setLocationOpen(false);
+                                }}
+                              >
+                                {d}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  {showErrors && !location && (
+                    <Error>Please select a destination</Error>
+                  )}
+                </Field>
+
+                <Field label="Departure date">
+                  <Popover open={dateOpen} onOpenChange={setDateOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="h-12 w-full justify-start gap-3 cursor-pointer"
+                      >
+                        <CalendarDaysIcon className="h-5 w-5 text-blue-600" />
+                        {travelDate
+                          ? format(travelDate, "PPP")
+                          : "Select a date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <Calendar
+                        mode="single"
+                        selected={travelDate}
+                        onSelect={(d) => {
+                          setTravelDate(d ?? undefined);
+                          setDateOpen(false);
                         }}
-                        placeholder="Search destinations..."
+                        components={{
+                          DayButton: (props) => (
+                            <CalendarDayButton {...props} />
+                          ),
+                        }}
                       />
-                      <CommandList>
-                        <CommandEmpty>No results</CommandEmpty>
-                        <CommandGroup>
-                          {filteredDestinations.map((d) => (
-                            <CommandItem
-                              key={d}
-                              value={d}
-                              onSelect={() => {
-                                setLocation(d);
-                                setLocationOpen(false);
-                              }}
-                            >
-                              {d}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-                {showErrors && !location && (
-                  <Error>Please select a destination</Error>
-                )}
-              </Field>
+                    </PopoverContent>
+                  </Popover>
+                  {showErrors && !travelDate && (
+                    <Error>Please select a date</Error>
+                  )}
+                </Field>
 
-              <Field label="Departure date">
-                <Popover open={dateOpen} onOpenChange={setDateOpen}>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="h-12 w-full justify-start gap-3 cursor-pointer">
-                      <CalendarDaysIcon className="h-5 w-5 text-blue-600" />
-                      {travelDate ? format(travelDate, "PPP") : "Select a date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <Calendar
-                      mode="single"
-                      selected={travelDate}
-                      onSelect={(d) => {
-                        setTravelDate(d ?? undefined);
-                        setDateOpen(false);
-                      }}
-                      components={{
-                        DayButton: (props) => (
-                          <CalendarDayButton {...props} />
-                        ),
-                      }}
-                    />
-                  </PopoverContent>
-                </Popover>
-                {showErrors && !travelDate && (
-                  <Error>Please select a date</Error>
-                )}
-              </Field>
+                <Field label="Type of trip">
+                  <RadioGroup
+                    options={TRIP_TYPE_LABELS}
+                    value={tripType}
+                    onChange={setTripType}
+                  />
+                  {showErrors && !tripType && (
+                    <Error>Please select a trip type</Error>
+                  )}
+                </Field>
 
-              <Field label="Type of trip">
-                <RadioGroup
-                  options={TRIP_TYPE_LABELS}
-                  value={tripType}
-                  onChange={setTripType}
+                <PeopleCounters
+                  adults={adults}
+                  childrenCount={childrenCount}
+                  infants={infants}
+                  setAdults={setAdults}
+                  setChildrenCount={setChildrenCount}
+                  setInfants={setInfants}
                 />
-                {showErrors && !tripType && (
-                  <Error>Please select a trip type</Error>
-                )}
-              </Field>
-
-              <PeopleCounters
-                adults={adults}
-                childrenCount={childrenCount}
-                infants={infants}
-                setAdults={setAdults}
-                setChildrenCount={setChildrenCount}
-                setInfants={setInfants}
-              />
               </div>
             </div>
           )}
@@ -296,7 +307,9 @@ export default function QuestionnairePage() {
                   </label>
                   <div className="rounded-xl border border-[#e7eaf3] bg-[#f6f8fc] px-4 py-4">
                     <div className="flex items-baseline justify-between">
-                      <span className="text-sm font-semibold text-[#0b1930]">Suggested</span>
+                      <span className="text-sm font-semibold text-[#0b1930]">
+                        Suggested
+                      </span>
                       <span className="text-lg font-bold text-[#0b1930]">
                         €{budgetAmount.toLocaleString()}
                       </span>
@@ -308,7 +321,9 @@ export default function QuestionnairePage() {
                         max={10000}
                         step={100}
                         value={budgetAmount}
-                        onChange={(e) => setBudgetAmount(Number(e.target.value))}
+                        onChange={(e) =>
+                          setBudgetAmount(Number(e.target.value))
+                        }
                         className="w-full accent-blue-500"
                       />
                       <div className="flex justify-between text-xs text-[#3d4a68]">
@@ -368,7 +383,11 @@ export default function QuestionnairePage() {
                   ]}
                   values={accommodationPrefs}
                   onToggle={(v) =>
-                    toggleSelection(v, accommodationPrefs, setAccommodationPrefs)
+                    toggleSelection(
+                      v,
+                      accommodationPrefs,
+                      setAccommodationPrefs,
+                    )
                   }
                 />
                 {accommodationPrefs.includes("Specific hotel brand") && (
@@ -569,7 +588,12 @@ function PeopleCounters({
   return (
     <div className="grid grid-cols-3 gap-4">
       <Counter label="Adults" value={adults} min={1} onChange={setAdults} />
-      <Counter label="Children" value={childrenCount} min={0} onChange={setChildrenCount} />
+      <Counter
+        label="Children"
+        value={childrenCount}
+        min={0}
+        onChange={setChildrenCount}
+      />
       <Counter label="Infants" value={infants} min={0} onChange={setInfants} />
     </div>
   );
@@ -587,7 +611,9 @@ function Counter({ label, value, min, onChange }: CounterProps) {
     <div className="flex items-center gap-4 rounded-xl border border-[#e7eaf3] bg-white px-4 py-3 shadow-sm">
       <div>
         <p className="text-sm font-semibold text-[#0b1930]">{label}</p>
-        <p className="text-xs text-gray-500">{min > 0 ? "Required" : "Optional"}</p>
+        <p className="text-xs text-gray-500">
+          {min > 0 ? "Required" : "Optional"}
+        </p>
       </div>
       <div className="flex items-center gap-2">
         <button

@@ -78,7 +78,8 @@ body {
   }
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: var(--font-inter), "Inter", "Inter Fallback", sans-serif;
 }
 

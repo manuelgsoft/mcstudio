@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Lora, Montserrat, Oswald, Poppins, Roboto } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  Lora,
+  Montserrat,
+  Oswald,
+  Poppins,
+  Roboto,
+} from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,7 +29,7 @@ const geistMono = Geist_Mono({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-})
+});
 
 const lora = Lora({
   variable: "--font-lora",

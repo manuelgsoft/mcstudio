@@ -30,8 +30,8 @@ export default function Info() {
           A travel studio built around you
         </h2>
         <p className="text-base text-[#3d4a68] sm:text-lg">
-          We focus on what sells your trip: evocative places, thoughtful pacing, and a plan that
-          feels effortless.
+          We focus on what sells your trip: evocative places, thoughtful pacing,
+          and a plan that feels effortless.
         </p>
       </div>
 
@@ -46,7 +46,9 @@ export default function Info() {
               style={{ backgroundImage: `url(${card.image})` }}
             />
             <div className="space-y-2 px-5 pb-5 pt-4 text-left">
-              <h3 className="text-lg font-semibold text-[#0b1930]">{card.title}</h3>
+              <h3 className="text-lg font-semibold text-[#0b1930]">
+                {card.title}
+              </h3>
               <p className="text-sm text-[#3d4a68]">{card.copy}</p>
             </div>
           </article>
