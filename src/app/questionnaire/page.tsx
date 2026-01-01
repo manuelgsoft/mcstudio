@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import QuestionnairePage from "@/app/pages/QuestionnairePage";
+import QuestionnairePage from "@/app/QuestionnairePage";
 
 export const metadata: Metadata = {
   title: "Questionnaire | MC Studio",
