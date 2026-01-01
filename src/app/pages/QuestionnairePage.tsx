@@ -37,7 +37,7 @@ const TRIP_TYPE_LABELS: Record<TripType, string> = {
 
 const STEP_IMAGES: Record<number, { src: string; alt: string }> = {
   1: {
-    src: "https://images.unsplash.com/photo-1494145904049-0dca59b4bbad?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "https://images.unsplash.com/photo-1504598318550-17eba1008a68?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     alt: "Traveler overlooking mountains at sunrise",
   },
   2: {
@@ -49,7 +49,7 @@ const STEP_IMAGES: Record<number, { src: string; alt: string }> = {
     alt: "Airplane wing flying above the clouds",
   },
   4: {
-    src: "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     alt: "Cozy hotel lobby with warm lighting",
   },
 };
