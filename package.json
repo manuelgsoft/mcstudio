@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "db:dev": "npx prisma migrate dev",
+    "db:prod": "npx prisma migrate deploy && npx prisma generate",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -17,6 +18,10 @@
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
+    "@tanstack/react-query": "^5.90.16",
+    "@trpc/client": "^11.8.1",
+    "@trpc/react-query": "^11.8.1",
+    "@trpc/server": "^11.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -27,7 +32,8 @@
     "react": "19.1.0",
     "react-day-picker": "^9.13.0",
     "react-dom": "19.1.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

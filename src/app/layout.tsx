@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import {
-    Geist,
-    Geist_Mono,
-    Inter,
-    Lora,
-    Montserrat,
-    Oswald,
-    Poppins,
-    Roboto,
+  Geist,
+  Geist_Mono,
+  Inter,
+  Lora,
+  Montserrat,
+  Oswald,
+  Poppins,
+  Roboto,
 } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "MC Studio",
@@ -71,7 +72,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${montserrat.variable} ${poppins.variable} ${lora.variable} ${oswald.variable} ${inter.variable} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

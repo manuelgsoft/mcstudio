@@ -24,6 +24,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ALL_COUNTRIES } from "@/data/countries";
+import { trpc } from "@/utils/trpc";
 import { DateRange } from "react-day-picker";
 
 type TripType = "individual" | "couple" | "family" | "group";
@@ -135,8 +136,19 @@ export default function QuestionnairePage() {
   const [contactPhone, setContactPhone] = useState("");
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [showErrors, setShowErrors] = useState(false);
   const [showSubmitErrors, setShowSubmitErrors] = useState(false);
+
+  const createResponse = trpc.questionnaireResponse.create.useMutation({
+    onSuccess: () => {
+      setSubmitError(null);
+      setSubmitted(true);
+    },
+    onError: () => {
+      setSubmitError("We couldn't submit your request. Please try again.");
+    },
+  });
 
   const isSignedIn = false; // TODO: replace with real auth state
   const trimmedContactName = contactName.trim();
@@ -211,33 +223,42 @@ export default function QuestionnairePage() {
     e.preventDefault();
     setShowErrors(false);
     setShowSubmitErrors(false);
+    setSubmitError(null);
     if (!validateStep(currentStep)) {
       if (currentStep === 4) setShowSubmitErrors(true);
       setShowErrors(true);
       return;
     }
+    const startDate = travelDates?.from;
+    const endDate = travelDates?.to;
+
+    if (!startDate || !endDate || !tripType) {
+      setShowSubmitErrors(true);
+      setShowErrors(true);
+      return;
+    }
+
     const payload = {
       location,
-      startDate: travelDates?.from?.toISOString() ?? "",
-      endDate: travelDates?.to?.toISOString() ?? "",
-      tripType: tripType ?? "",
+      startDate,
+      endDate,
+      tripType,
       adults,
       children: childrenCount,
       infants,
       budgetAmount,
       experiences: experiencePrefs,
       flightPrefs,
-      flightCompany,
+      flightCompany: flightCompany.trim() || null,
       accommodationPrefs,
-      accommodationCompany,
-      otherDetails: otherDetails || null,
-      contactName,
-      contactEmail,
-      contactPhone: contactPhone || null,
+      accommodationCompany: accommodationCompany.trim() || null,
+      otherDetails: otherDetails.trim() || null,
+      contactName: trimmedContactName,
+      contactEmail: trimmedContactEmail,
+      contactPhone: contactPhone.trim() ? contactPhone.trim() : null,
     };
 
-    console.log("Questionnaire submission", payload);
-    setSubmitted(true);
+    createResponse.mutate(payload);
   }
 
   const cardContent = (
@@ -629,13 +650,21 @@ export default function QuestionnairePage() {
           ) : (
             <Button
               type="submit"
+              disabled={createResponse.isPending}
               className="cursor-pointer rounded-full border border-blue-500 bg-blue-500 px-6 text-white shadow-md hover:bg-[#1e55d3]"
             >
-              Get my custom trip plan
+              {createResponse.isPending
+                ? "Submitting..."
+                : "Get my custom trip plan"}
             </Button>
           )}
         </div>
       </footer>
+      {submitError && (
+        <div className="mt-4">
+          <Error>{submitError}</Error>
+        </div>
+      )}
     </>
   );
 
