@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
-import { ALL_COUNTRIES } from "@/app/data/countries";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ALL_COUNTRIES } from "@/data/countries";
 import { DateRange } from "react-day-picker";
 
 type TripType = "individual" | "couple" | "family" | "group";

@@ -10,7 +10,6 @@ import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { FormEvent, useMemo, useState, type ReactNode } from "react";
 
-import { ALL_COUNTRIES } from "@/app/data/countries";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -33,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ALL_COUNTRIES } from "@/data/countries";
 import { DateRange } from "react-day-picker";
 
 type TripType = "individual" | "couple" | "family" | "group";
