@@ -1,10 +1,10 @@
 "use client";
-import AboutUs from "@/app/components/AboutUs";
-import Footer from "@/app/components/Footer";
-import Hero from "@/app/components/Hero";
-import Info from "@/app/components/Info";
-import NavBar from "@/app/components/NavBar";
-import SearchForm from "@/app/components/SearchForm";
+import AboutUs from "@/components/AboutUs";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import Info from "@/components/Info";
+import NavBar from "@/components/NavBar";
+import SearchForm from "@/components/SearchForm";
 
 export default function HomePage() {
   return (

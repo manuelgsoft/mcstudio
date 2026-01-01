@@ -6,9 +6,9 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
-import Footer from "@/app/components/Footer";
-import NavBar from "@/app/components/NavBar";
 import { ALL_COUNTRIES } from "@/app/data/countries";
+import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
 import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
 import {
