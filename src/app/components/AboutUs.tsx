@@ -10,7 +10,7 @@ export default function AboutUs() {
             Meet the team
           </p>
           <h2 className="mt-3 text-3xl font-semibold text-[#0b1930] sm:text-4xl">
-            Maria and Carolina, your travel tailors
+            María and Carolina, your travel tailors
           </h2>
           <p className="mt-3 text-base text-[#3d4a68] sm:text-lg">
             Here to make our dream come true: custom-sewing trips designed for

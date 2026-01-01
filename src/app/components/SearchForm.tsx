@@ -12,7 +12,7 @@ import { FormEvent, useMemo, useState, type ReactNode } from "react";
 
 import { ALL_COUNTRIES } from "@/app/data/countries";
 import { Button } from "@/components/ui/button";
-import { Calendar, CalendarDayButton } from "@/components/ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Command,
   CommandEmpty,
@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateRange } from "react-day-picker";
 
 type TripType = "individual" | "couple" | "family" | "group";
 
@@ -49,7 +50,7 @@ export default function SearchForm() {
   const [locationOpen, setLocationOpen] = useState(false);
   const [locationQuery, setLocationQuery] = useState("");
   const [dateOpen, setDateOpen] = useState(false);
-  const [travelDate, setTravelDate] = useState<Date | undefined>();
+  const [travelDate, setTravelDate] = useState<DateRange | undefined>();
   const [tripType, setTripType] = useState<TripType | undefined>();
   const [submitted, setSubmitted] = useState(false);
 
@@ -67,7 +68,8 @@ export default function SearchForm() {
     if (!location || !travelDate || !tripType) return;
     const params = new URLSearchParams();
     params.set("location", location);
-    params.set("date", travelDate.toISOString());
+    params.set("startDate", format(travelDate.from as Date, "yyyy-MM-dd"));
+    params.set("endDate", format(travelDate.to as Date, "yyyy-MM-dd"));
     params.set("tripType", tripType);
     const queryString = params.toString();
     router.push(`/questionnaire${queryString ? `?${queryString}` : ""}`);
@@ -158,8 +160,15 @@ export default function SearchForm() {
                   className="cursor-pointer flex w-full items-center justify-between rounded-lg border-0 bg-transparent px-0 text-left text-base font-medium text-black shadow-none hover:bg-transparent focus-visible:ring-0"
                   type="button"
                 >
-                  {travelDate ? (
-                    format(travelDate, "PPP")
+                  {travelDate?.from ? (
+                    travelDate.to ? (
+                      <>
+                        {format(travelDate.from, "PPP")} –{" "}
+                        {format(travelDate.to, "PPP")}
+                      </>
+                    ) : (
+                      format(travelDate.from, "PPP")
+                    )
                   ) : (
                     <span className="text-gray-400">When are you going?</span>
                   )}
@@ -167,20 +176,13 @@ export default function SearchForm() {
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
                 <Calendar
-                  mode="single"
+                  mode="range"
+                  defaultMonth={travelDate?.from}
                   selected={travelDate}
-                  onSelect={(day) => {
-                    setTravelDate(day);
-                    if (day) setDateOpen(false);
-                  }}
-                  components={{
-                    DayButton: (props) => (
-                      <CalendarDayButton
-                        {...props}
-                        className="cursor-pointer"
-                      />
-                    ),
-                  }}
+                  onSelect={setTravelDate}
+                  numberOfMonths={2}
+                  showOutsideDays={false}
+                  className="bg-blue-500"
                 />
               </PopoverContent>
             </Popover>

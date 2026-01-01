@@ -6,7 +6,7 @@ const cards = [
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.1.0",
   },
   {
-    title: "Detail-obsessed studio",
+    title: "Detail-obsessed",
     copy: "We curate options, refine aesthetics, and keep logistics smooth.",
     image:
       "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.1.0",
