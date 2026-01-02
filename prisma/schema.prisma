@@ -42,8 +42,11 @@ model User {
 model QuestionnaireResponse {
   id                   Int      @id @default(autoincrement())
   location             String
-  startDate            DateTime
-  endDate              DateTime
+  knowsExactDates      Boolean  @default(true)
+  startDate            DateTime?
+  endDate              DateTime?
+  estimatedDepartureDate DateTime?
+  estimatedDurationDays Int?
   tripType             String
   adults               Int
   children             Int      @default(0)
