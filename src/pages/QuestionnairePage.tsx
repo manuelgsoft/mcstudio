@@ -90,9 +90,9 @@ export default function QuestionnairePage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const locationFromSearch = searchParams.get("location") ?? "";
-  const tripTypeFromSearch = isTripType(searchParams.get("tripType"))
-    ? (searchParams.get("tripType") as TripType)
+  const locationFromSearch = searchParams?.get("location") ?? "";
+  const tripTypeFromSearch = isTripType(searchParams?.get("tripType") ?? "")
+    ? (searchParams?.get("tripType") as TripType)
     : undefined;
 
   const initialStep = locationFromSearch && tripTypeFromSearch ? 2 : 1;
@@ -100,8 +100,8 @@ export default function QuestionnairePage() {
   const TOTAL_STEPS = STEP_DETAILS.length;
 
   const datesFromSearch = useMemo(() => {
-    const startRaw = searchParams.get("startDate");
-    const endRaw = searchParams.get("endDate");
+    const startRaw = searchParams?.get("startDate");
+    const endRaw = searchParams?.get("endDate");
 
     const parseDate = (raw: string | null) => {
       if (!raw) return undefined;
@@ -109,8 +109,8 @@ export default function QuestionnairePage() {
       return Number.isNaN(parsed.getTime()) ? undefined : parsed;
     };
 
-    const start = parseDate(startRaw);
-    const end = parseDate(endRaw);
+    const start = parseDate(startRaw as string);
+    const end = parseDate(endRaw as string);
     if (!start && !end) return undefined;
     return { from: start, to: end };
   }, [searchParams]);
@@ -397,7 +397,7 @@ export default function QuestionnairePage() {
               <RadioGroup
                 options={TRIP_TYPE_LABELS}
                 value={tripType}
-                onChange={setTripType}
+                onChange={(v) => setTripType(v as TripType)}
               />
               {showErrors && !tripType && (
                 <Error>Please select a trip type</Error>
@@ -640,7 +640,7 @@ export default function QuestionnairePage() {
                     <div className="flex justify-between text-xs text-[#3d4a68]">
                       <span>€100</span>
                       <span>€5050</span>
-                      <span>€10,000</span>
+                      <span>+€10,000</span>
                     </div>
                   </div>
                 </div>

@@ -7,8 +7,9 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "updateSchema": "npx prisma migrate dev",
-    "applyMigrations": "npx prisma migrate deploy",
+    "update-schema": "npx prisma migrate dev",
+    "apply-migrations": "npx prisma migrate deploy",
+    "type-check": "tsc --noEmit",
     "format": "prettier --write ."
   },
   "dependencies": {
