@@ -23,7 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ALL_COUNTRIES } from "@/data/countries";
+import { ALL_COUNTRIES } from "@/utils/data";
 import { trpc } from "@/utils/trpc";
 import { DateRange } from "react-day-picker";
 

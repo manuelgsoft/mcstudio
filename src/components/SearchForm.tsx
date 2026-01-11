@@ -29,16 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ALL_COUNTRIES } from "@/data/countries";
-
-type TripType = "individual" | "couple" | "family" | "group";
-
-const TRIP_TYPE_LABELS: Record<TripType, string> = {
-  individual: "Individual travel",
-  couple: "Couple’s trip",
-  family: "Family trip",
-  group: "Group trip",
-};
+import { ALL_COUNTRIES, type TripType, TRIP_TYPE_LABELS } from "@/utils/data";
 
 export default function SearchForm() {
   const router = useRouter();

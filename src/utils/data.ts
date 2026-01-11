@@ -201,4 +201,12 @@ export const COUNTRIES_BY_REGION: Record<string, string[]> = {
   ],
 };
 
+export type TripType = "individual" | "couple" | "family" | "group";
+export const TRIP_TYPE_LABELS: Record<TripType, string> = {
+  individual: "Individual Travel",
+  couple: "Couple’s Trip",
+  family: "Family Trip",
+  group: "Group Trip",
+};
+
 export const ALL_COUNTRIES = Object.values(COUNTRIES_BY_REGION).flat();
